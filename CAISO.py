@@ -1,8 +1,8 @@
-from sklearn.neighbors import KNeighborsRegressor
 import sys
-import mlflow.tracking
-import mlflow.pyfunc
+import mlflow
+from sklearn.neighbors import KNeighborsRegressor
 import sklearn.metrics as skm
+import pandas as pd
 
 import prepros
 
@@ -43,8 +43,8 @@ class CAISO(mlflow.pyfunc.PythonModel):
         self.avg = hour_avg
         return self
 
-    def predict(self, context, samples):
-        samples = self.pipeline.transform(samples)
+    def predict(self, context, model_input: pd.DataFrame)-> pd.DataFrame:
+        samples = self.pipeline.transform(model_input)
         preds = self.avg[samples["hour"].values]
         return preds
 
@@ -61,5 +61,8 @@ print("r2", r2)
 
 print("Saving model")
 
-mlflow.pyfunc.save_model("model", python_model=model)
-
+mlflow.pyfunc.save_model(
+    path="model", 
+    python_model=model,
+    input_example=pd.DataFrame([{"Time": "2026-01-01T15:00:00Z"}])
+    )
