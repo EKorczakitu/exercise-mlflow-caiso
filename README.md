@@ -20,7 +20,7 @@ Now let's have a look at the files in the Explorer tab. `CAISO.py` is the script
 
 The `MLproject` file gives MLflow instructions for how to run this project. In our case it mentions the name of the project, the environment file that contains the dependencies needed to run the project, and instructions on how to run the model. In this case we simply need to run the `CAISO.py` python file without any arguments.
 
-In this way the model is packaged as a MLflow Project. When the project is ran it trains a CAISO model, logs the training error, and saves the model as a python function.
+When the project is ran it trains a CAISO model, logs training metrics, and saves the model as a python function.
 
 First, inside the terminal run the MLflow project with:
 
